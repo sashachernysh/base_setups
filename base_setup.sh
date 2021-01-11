@@ -35,7 +35,10 @@ fi
 #
 echo "apt update and install"
 apt update && apt upgrade -y && apt autoremove -y
-apt install ufw fail2ban  unattended-upgrades apt-listchanges -y 
+apt install ufw fail2ban software-properties-common unattended-upgrades apt-listchanges net-tools  -y 
+add-apt-repository ppa:apt-fast/stable
+apt install apt-fast -y
+
 mkdir /root/script_backupfiles/
 clear
 #
@@ -53,7 +56,7 @@ clear
 # SSH
 #
 echo "Set ssh config"
-read -p "Choose your SSH Port: (default 22) " -e -i 2222 sshport
+read -p "Choose your SSH Port: (default 22, use 11113) " -e -i 2222 sshport
 ssh-keygen -f /etc/ssh/key1rsa -t rsa -b 4096 -N ""
 ssh-keygen -f /etc/ssh/key2ecdsa -t ecdsa -b 521 -N ""
 ssh-keygen -f /etc/ssh/key3ed25519 -t ed25519 -N ""
@@ -173,6 +176,9 @@ clear
 # END
 #
 systemctl enable fail2ban.service
+#hardening script
+sudo apt-fast -y install git && sudo git clone https://github.com/sashachernysh/vps-harden.git && cd vps-harden && sudo bash get-hard.sh
+#
 read -p "Press enter to reboot"
 ufw --force enable
 ufw reload
