@@ -36,7 +36,7 @@ fi
 echo "apt update and install"
 apt update && apt upgrade -y && apt autoremove -y
 apt install ufw fail2ban software-properties-common unattended-upgrades apt-listchanges net-tools  -y 
-add-apt-repository ppa:apt-fast/stable
+add-apt-repository ppa:apt-fast/stable -y
 apt install apt-fast -y
 
 mkdir /root/script_backupfiles/
